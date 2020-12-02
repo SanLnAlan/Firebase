@@ -16,43 +16,62 @@
 </head>
 <body>
 
-    <div id="app" class="container">
-			<h1>{{titulo}}</h1>
-			
+	<div id="app" class="container">
+		<h1>{{titulo}}</h1>
+		
 
-			<ul v-for="fruta of materias">
-				<li>{{fruta}}</li>
-			</ul>
-			
-			
-			<table class="table">
-				<thead>
-					<tr>
-						<h3>{{titulo_tabla}}</h3>
-					</tr>
-					<tr>
-						<th scope="col">Id</th>
-						<th scope="col">Nombre</th>
-						<th scope="col">Apellido</th>
-						<th scope="col">Nacimiento</th>
-						<th scope="col"><i class="pl-2 fa fa-times-circle"></i></th>
-						<th scope="col"><i class="pl-2 fa fa-pencil"></i></th>
-					</tr>
-				</thead>
-				<tbody id="tabla">
-					<tr v-for="materia of materias">
-						<!-- <th scope="row">{{materia.id}}</th> -->
-						<td> {{materia.id}} </td>
-						<td> {{materia.nombre}} </td>
-						<td> {{materia.apellido}} </td>
-						<td> {{materia.fecha_nacimiento}} </td>
-						<!-- <td><button onclick="eliminar({{materia.id}})" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i></button></td> -->
-					</tr>
-				</tbody>
-			</table>
-			
+		<!-- <ul v-for="fruta of materias">
+			<li>{{fruta}}</li>
+		</ul> -->
+		
+		
+		<table class="table">
+			<thead>
+				<tr>
+					<h3>{{titulo_tabla}}</h3>
+				</tr>
+				<tr>
+					<!-- <th scope="col">Id</th> -->
+					<th scope="col">Nombre</th>
+					<th scope="col">Apellido</th>
+					<th scope="col">Nacimiento</th>
+					<th scope="col"><i class="pl-2 fa fa-times-circle"></i></th>
+					<th scope="col"><i class="pl-2 fa fa-pencil"></i></th>
+				</tr>
+			</thead>
+			<tbody id="tabla">
+				<tr v-for="materia of materias">
+					<td> {{materia.data.nombre}} </td>
+					<td> {{materia.data.apellido}} </td>
+					<td> {{materia.data.fecha_nacimiento}} </td>
+					<td><button v-on:click="eliminar(materia.id)" class="btn btn-sm btn-danger"><i class="fa fa-times-circle"></i></button></td>
+				</tr>
+			</tbody>
+		</table>
+		
+		<div id="menuNuevo" :class="{'d-none':showNuevo}">
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<label class="h5" for="inputEmail4">Nombre</label>
+					<input type="text" class="form-control" v-model="n_nombre">
+				</div>
+				<div class="form-group col-md-4">
+					<label class="h5" for="inputEmail4">Apellido</label>
+					<input type="text" class="form-control" v-model="n_apellido">
+				</div>
+				<div class="form-group col-md-3">
+					<label class="h5" for="inputEmail4">Fecha</label>
+					<input type="date" class="form-control" v-model="n_fecha">
+				</div>
+			</div>
+			<button class="btn btn-success mb-2" @click="guardar">Guardar</button>
+			<button class="btn btn-danger mb-2" @click="showNuevo = true">Cancelar</button>
 		</div>
 
+		<button class="btn btn-primary" :class="{'d-none':!showNuevo}" @click="showNuevo = false">Agregar nuevo</button>
+
+	
+	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 	<script src="app.js"></script>
