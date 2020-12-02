@@ -45,52 +45,57 @@ const app = new Vue({
 		n_apellido: '',		
 		n_fecha: '',
 		showNuevo: true,
+		editando: false,
 	},
 	methods: {
 		enfocar(){
 			this.showNuevo = false;
-			this.$nextTick(() => this.$refs.nom.focus())
+			this.$nextTick(() => this.$refs.nom.focus());
+			this.n_nombre = '';
+			this.n_apellido = '';
+			this.n_fecha = '';
 		},
 		editar(id, nombre, apellido, fecha){
 			console.log(id, nombre, apellido, fecha);
-			// document.getElementById("e_nombre").placeholder = nombre;
-			// document.getElementById("e_apellido").placeholder = apellido;
-			// document.getElementById("e_fecha").placeholder = fecha;
+			this.showNuevo = false;
+			this.editando = true;
+			// this.$nextTick(() => this.$refs.nom.value = nombre);
+			// this.$nextTick(() => this.$refs.apellido.value = apellido);
+			// this.$nextTick(() => this.$refs.fecha.value = fecha);
+			this.n_nombre = nombre;
+			this.n_apellido = apellido;
+			this.n_fecha = fecha;
 		
-			// document.getElementById("actualizar_boton").onclick = function(){
-			// 	let nombre = document.getElementById("e_nombre").value;
-			// 	let apellido = document.getElementById("e_apellido").value;
-			// 	let fecha = document.getElementById("e_fecha").value;
-		
-			// 	if (nombre == '') {
-			// 		nombre = document.getElementById("e_nombre").placeholder;
-			// 	}
-			// 	if (apellido == '') {
-			// 		apellido = document.getElementById("e_apellido").placeholder;
-			// 	}
-			// 	if (fecha == '') {
-			// 		fecha = document.getElementById("e_fecha").placeholder;
-			// 	}
-		
-			// 	let actualizarInfo = db.collection("usuarios").doc(id);
-		
-			// 	return actualizarInfo.update({
-			// 		nombre: nombre,
-			// 		apellido: apellido,
-			// 		fecha_nacimiento: fecha
-			// 	})
-			// 	.then(function() {
-			// 			console.log("Document successfully updated!");
-			// 			$('#Modal').modal('hide');
-			// 			document.getElementById("e_nombre").value = '';
-			// 			document.getElementById("e_apellido").value = '';
-			// 			document.getElementById("e_fecha").value = '';
-			// 	})
-			// 	.catch(function(error) {
-			// 			// The document probably doesn't exist.
-			// 			console.error("Error updating document: ", error);
-			// 	});
-			// }
+			this.$nextTick(() => this.$refs.editBtn.onclick = function(){
+				nombre_editado = app.n_nombre;
+				apellido_editado = app.n_apellido;
+				fecha_editado = app.n_fecha;
+				usuarios = [];
+				let actualizarInformacion = db.collection("usuarios").doc(id);
+				return actualizarInformacion.update({
+							nombre: nombre_editado,
+							apellido: apellido_editado,
+							fecha_nacimiento: fecha_editado
+						})
+						.then(function() {
+								console.log("Document successfully updated!");
+								// $('#Modal').modal('hide');
+								app.n_nombre = '';
+								app.n_apellido = '';
+								app.n_fecha = '';
+								app.editando = false;
+								app.showNuevo = true;
+								
+								app.materias = usuarios;
+						})
+						.catch(function(error) {
+								// The document probably doesn't exist.
+								console.error("Error updating document: ", error);
+						});
+
+			});
+
+			
 		},
 		eliminar(id){
 			usuarios = [];

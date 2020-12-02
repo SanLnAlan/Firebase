@@ -58,16 +58,16 @@
 				</div>
 				<div class="form-group col-md-4">
 					<label class="h5" for="inputEmail4">Apellido</label>
-					<input type="text" class="form-control" v-model="n_apellido">
+					<input type="text" class="form-control" ref="apellido" v-model="n_apellido">
 				</div>
 				<div class="form-group col-md-3">
 					<label class="h5" for="inputEmail4">Fecha</label>
-					<input type="date" class="form-control" v-model="n_fecha" @keyup.enter="guardar">
+					<input type="date" class="form-control" ref="fecha" v-model="n_fecha">
 				</div>
 			</div>
-			<button class="btn btn-success mb-2" @click="guardar">Guardar</button>
-			<button class="btn btn-danger mb-2" @click="showNuevo = true">Cancelar</button>
-			<!-- <button class="btn btn-danger mb-2" onclick="enfocar()">Cancelar</button> -->
+			<button class="btn btn-success mb-2" :class="{'d-none': editando}" @click="guardar">Guardar</button>
+			<button class="btn btn-warning mb-2" :class="{'d-none': !editando}" ref="editBtn" @click="[editando = false]">Guardar cambios</button>
+			<button class="btn btn-danger mb-2" @click="[showNuevo = true, editando = false]">Cancelar</button>
 		</div>
 
 		<button class="btn btn-primary" :class="{'d-none':!showNuevo}" @click="enfocar">Agregar nuevo</button>
